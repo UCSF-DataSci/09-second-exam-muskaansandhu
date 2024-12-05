@@ -17,10 +17,9 @@
 python3 generate_dirty_data.py #running the python script 
 
 #2)
-grep -v '^#' ms_data_dirty.csv | sed '/^$/d' | sed 's/,,*/,/g' | cut -d, -f1,2,4,5,6  > cleaned_data.csv
-head -n 1 cleaned_data.csv > ms_data.csv
-awk -F, '$5 >= 2.0 && $5 <= 8.0' cleaned_data.csv >> ms_data.csv
-#removes lines with comments, empty lines, and extra commas from the dirty csv. extracts the five columns we need, filters the walked speed from 2.0-8.0, and saves it to a csv called ms_data.csv.
+grep -v '^#' ms_data_dirty.csv | sed '/^$/d' | sed 's/,,*/,/g' | cut -d, -f1,2,4,5,6  > cleaned_data.csv #removes lines with comments, empty lines, and extra commas from the dirty csv. extracts the five columns we need and appends it to csv called cleaned_data.csv
+head -n 1 cleaned_data.csv > ms_data.csv #appends the first row (all the column names) to ms_data.csv
+awk -F, '$5 >= 2.0 && $5 <= 8.0' cleaned_data.csv >> ms_data.csv #filters the walking speed from 2.0-8.0 and appends it to ms_data.csv.
 
 
 #3)
@@ -34,6 +33,5 @@ echo "First 10 records:"
 head -n 10 ms_data.csv #printing first 10 records 
  
 rm cleaned_data.csv 
-echo "Removed cleaned_data.csv"
-
+echo "Removed cleaned_data.csv" #removing the cleaned_data.csv, which was a file created as an intermediate step in the data cleaning process 
 
